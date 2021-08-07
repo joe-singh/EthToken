@@ -35,7 +35,7 @@ abstract contract ECR20Interface {
         }
     }
 
-    contract HeliumToken is ECR20Interface, Owned {
+    contract Token is ECR20Interface, Owned {
 
         string public symbol;
         string public  name;
