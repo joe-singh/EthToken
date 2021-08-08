@@ -85,15 +85,20 @@ contract Token is ECR20Interface, Owned {
 
     }
 
-
+    /* Return the total supply of coins in circulation.
+     * Equal to the total supply minus any coins sent to 0x0 to be burned. */
     function totalSupply() public override view returns (uint) {
         return _totalSupply - balances[address(0)];
     }
 
+    /* Return the number of tokens owned by TokenOwner */
     function balanceOf(address TokenOwner) public override view returns (uint) {
         return balances[TokenOwner];
     }
 
+    /* Transfer tokens from the invoker of the contract to the address to.
+     * Emit an event to store a record of the transfer on the blockchain.
+     * Return true if successful */
     function transfer(address to, uint tokens) public override returns (bool) {
         require(balances[msg.sender] >= tokens);
         balances[msg.sender] -= tokens;
@@ -102,6 +107,8 @@ contract Token is ECR20Interface, Owned {
         return true;
     }
 
+    /* Mints amount new tokens and adds them to the global supply. Only the
+     * the central bank address can invoke this method. Returns true if successful. */
     function mint(uint amount) public returns (bool) {
         require(msg.sender == _centralBank);
         balances[_centralBank] += amount;
@@ -109,6 +116,10 @@ contract Token is ECR20Interface, Owned {
         return true;
     }
 
+    /* Removes amount tokens from address target. Only the
+     * the central bank address can invoke this method. If the amount is larger
+     * than target's balance, the account is emptied to 0. Returns true if
+     * successful. */
     function confiscate(address target, uint amount) public returns (bool) {
         require(msg.sender == _centralBank);
 
@@ -120,22 +131,25 @@ contract Token is ECR20Interface, Owned {
         return true;
     }
 
-    /* This is to allow other people to spend from my balance. I don't really care about
-       that. Leaving it in if I want to implement it later/for consistency with the ERC-20
-       standard. */
+    /* This is to allow other people to spend from my balance. I am not implementing
+     * this since I don't want my token to have this ability, but I am leaving it
+     * in case I want to implement it later to comply with the ERC-20 standard. */
     function approve(address spender, uint tokens) public override returns (bool) {
         return true;
     }
 
-    /* This is to allow a third party to transfer tokens from your balance, up to a
-       specified amount. Leaving this unimplemented for now. */
+    /* This is to allow a third party to transfer from the address from to address to,
+     * up to a specified amount tokens. I am not implementing this since I don't
+     * want my token to have this ability, but I am leaving it in case I want to
+     * implement it later to comply with the ERC-20 standard. */
     function transferFrom(address from, address to, uint tokens) public override returns (bool) {
         return true;
     }
 
 
-    /* This is to show how much spender can spend from tokenOwner's balance. Leaving unimplemented
-       for now. I don't want other people spending others' money. */
+    /* This is to show how much a spender can spend from tokenOwner's balance. I
+     * set this to 0 since I don't want third parties to be able to transfer
+     * balances between other accounts. */
     function allowance(address TokenOwner, address spender) public override view returns (uint) {
         return 0;
     }
