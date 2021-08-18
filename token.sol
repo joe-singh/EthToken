@@ -55,7 +55,7 @@ contract Token is ERC20Token, Owned {
         _name = "Token";
         _decimal = 0;
         _totalSupply = 100;
-        _minter = 0xD1e2f37D48d87D11ceA7ea93a374bAc0ed2DfCa7;
+        _minter = // Enter a public address here!
 
         balances[_minter] = _totalSupply;
         emit Transfer(address(0), _minter, _totalSupply);
