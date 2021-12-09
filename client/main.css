@@ -1,0 +1,24 @@
+@charset "UTF-8";
+
+h1, h2, p {
+  color: blue;
+  text-align: center;
+  font-family: 'Lato', sans-serif;
+}
+
+#targetAddress {
+  margin:0 auto;
+  display:block;
+}
+
+#greeting {
+  color: red;
+  text-align: center;
+  font-family: 'Lato', sans-serif;
+}
+
+#mint {
+  text-align: center;
+  margin:0 auto;
+  display:block;
+}
